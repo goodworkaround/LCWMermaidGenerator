@@ -32,7 +32,14 @@ function ConvertTo-WorkflowMarkdown {
 
             if ($task.CustomExtension) {
                 $lines.Add("  Custom extension: $(Format-NullableValue -Value $task.CustomExtension.DisplayName)")
-                $lines.Add("  Logic App: $(Format-NullableValue -Value $task.CustomExtension.LogicAppName)")
+                $logicAppLink = if ($task.CustomExtension.SubscriptionId -and $task.CustomExtension.ResourceGroupName -and $task.CustomExtension.LogicAppName) {
+                    $url = "https://portal.azure.com/#resource/subscriptions/$([Uri]::EscapeDataString($task.CustomExtension.SubscriptionId))/resourceGroups/$([Uri]::EscapeDataString($task.CustomExtension.ResourceGroupName))/providers/Microsoft.Logic/workflows/$([Uri]::EscapeDataString($task.CustomExtension.LogicAppName))"
+                    "[$($task.CustomExtension.LogicAppName)]($url)"
+                }
+                else {
+                    Format-NullableValue -Value $task.CustomExtension.LogicAppName
+                }
+                $lines.Add("  Logic App: $logicAppLink")
                 $lines.Add("  Resource group: $(Format-NullableValue -Value $task.CustomExtension.ResourceGroupName)")
                 $lines.Add("  Subscription: $(Format-NullableValue -Value $task.CustomExtension.SubscriptionId)")
             }

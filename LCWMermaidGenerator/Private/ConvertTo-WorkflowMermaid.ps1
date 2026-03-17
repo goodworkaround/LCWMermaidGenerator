@@ -28,8 +28,12 @@ function ConvertTo-WorkflowMermaid {
         $taskLabelParts = [System.Collections.Generic.List[string]]::new()
         $taskLabelParts.Add("[$($task.ExecutionSequence)] $(ConvertTo-MermaidSafeText -Value $task.DisplayName)")
         $taskLabelParts.Add((ConvertTo-MermaidSafeText -Value $taskType))
+        $logicAppUrl = $null
         if ($task.CustomExtension) {
             $taskLabelParts.Add("Logic App: $(ConvertTo-MermaidSafeText -Value $task.CustomExtension.LogicAppName)")
+            if ($task.CustomExtension.SubscriptionId -and $task.CustomExtension.ResourceGroupName -and $task.CustomExtension.LogicAppName) {
+                $logicAppUrl = "https://portal.azure.com/#resource/subscriptions/$([Uri]::EscapeDataString($task.CustomExtension.SubscriptionId))/resourceGroups/$([Uri]::EscapeDataString($task.CustomExtension.ResourceGroupName))/providers/Microsoft.Logic/workflows/$([Uri]::EscapeDataString($task.CustomExtension.LogicAppName))"
+            }
         }
 
         $diagramLines.Add(('    {0}["{1}"]' -f $taskNodeId, ($taskLabelParts -join '<br/>')))
@@ -46,6 +50,9 @@ function ConvertTo-WorkflowMermaid {
         }
 
         $diagramLines.Add("    class $taskNodeId $className")
+        if ($logicAppUrl) {
+            $diagramLines.Add("    click $taskNodeId href `"$logicAppUrl`" _blank")
+        }
         $previousTaskNodeId = $taskNodeId
     }
 
