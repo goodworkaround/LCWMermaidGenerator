@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.0](https://github.com/goodworkaround/LCWMermaidGenerator/compare/v0.1.0...v0.2.0) (2026-03-17)
+
+
+### Features
+
+* Add -AzureDevOps switch for ADO-compatible mermaid output ([5bbf311](https://github.com/goodworkaround/LCWMermaidGenerator/commit/5bbf311e393cfe066d8db0a44dde3769606073b7))
+
 ## [0.1.0](https://github.com/goodworkaround/LCWMermaidGenerator/compare/v0.0.1...v0.1.0) (2026-03-17)
 
 
