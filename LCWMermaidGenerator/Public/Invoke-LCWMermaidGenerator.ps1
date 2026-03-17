@@ -1,7 +1,8 @@
 function Invoke-LCWMermaidGenerator {
     [CmdletBinding()]
     param (
-        [string] $ReportPath = 'LifecycleWorkflowsReport.md'
+        [string] $ReportPath = 'LifecycleWorkflowsReport.md',
+        [switch] $AzureDevOps
     )
 
     process {
@@ -47,7 +48,7 @@ function Invoke-LCWMermaidGenerator {
         $reportSections.Add('')
 
         foreach ($workflowRecord in $workflowRecords) {
-            $reportSections.Add((ConvertTo-WorkflowMarkdown -WorkflowRecord $workflowRecord))
+            $reportSections.Add((ConvertTo-WorkflowMarkdown -WorkflowRecord $workflowRecord -AzureDevOps:$AzureDevOps))
         }
 
         $reportContent = $reportSections -join [Environment]::NewLine

@@ -1,6 +1,7 @@
 function ConvertTo-WorkflowMarkdown {
     param(
-        $WorkflowRecord
+        $WorkflowRecord,
+        [switch] $AzureDevOps
     )
 
     $lines = [System.Collections.Generic.List[string]]::new()
@@ -58,9 +59,16 @@ function ConvertTo-WorkflowMarkdown {
 
     $lines.Add('### Mermaid')
     $lines.Add('')
-    $lines.Add('```mermaid')
-    $lines.Add((ConvertTo-WorkflowMermaid -WorkflowRecord $WorkflowRecord))
-    $lines.Add('```')
+    if ($AzureDevOps) {
+        $lines.Add(':::mermaid')
+        $lines.Add((ConvertTo-WorkflowMermaid -WorkflowRecord $WorkflowRecord))
+        $lines.Add(':::')
+    }
+    else {
+        $lines.Add('```mermaid')
+        $lines.Add((ConvertTo-WorkflowMermaid -WorkflowRecord $WorkflowRecord))
+        $lines.Add('```')
+    }
     $lines.Add('')
 
     return ($lines -join [Environment]::NewLine)

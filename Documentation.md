@@ -17,7 +17,8 @@ A module for simplifying the process of getting an access token from Entra ID
 ### SYNTAX
 
 ```
-Invoke-LCWMermaidGenerator [[-ReportPath] <String>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
+Invoke-LCWMermaidGenerator [[-ReportPath] <String>] [-AzureDevOps] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ### DESCRIPTION
@@ -33,6 +34,21 @@ PS C:\> {{ Add example code here }}
 {{ Add example description here }}
 
 ### PARAMETERS
+
+#### -AzureDevOps
+
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 #### -ReportPath
 
